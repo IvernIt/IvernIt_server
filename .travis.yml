@@ -1,0 +1,8 @@
+jdk:
+ - openjdk8
+script:
+mvn build
+after_success:
+echo "The build was succesfully executed"
+after_failure:
+echo "The build has ended with errors"
