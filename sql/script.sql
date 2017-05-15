@@ -92,3 +92,7 @@
   INSERT INTO datosCosecha(idVegetal, idParametro, valor, fecha, resultado) VALUES(1, 1, 5,'01-01-2017', 'A');
   INSERT INTO datosCosecha(idVegetal, idParametro, valor, fecha, resultado) VALUES(1, 2, 40,'01-01-2017', 'A');
   INSERT INTO datosCosecha(idVegetal, idParametro, valor, fecha, resultado) VALUES(1, 3, 24,'01-01-2017', 'A');
+
+  CREATE USER 'ivernit'@'localhost' IDENTIFIED BY '1vern1t';
+  GRANT ALL PRIVILEGES ON IvernIt.* TO 'ivernit'@'localhost';
+  FLUSH PRIVILEGES;
