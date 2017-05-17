@@ -57,21 +57,20 @@
   INSERT INTO vegetales(nombre, idEstado) VALUES('Cebolla',3);
   INSERT INTO vegetales(nombre, idEstado) VALUES('Cebolla',4);
   INSERT INTO vegetales(nombre, idEstado) VALUES('Pimiento',1);
-  INSERT INTO vegetales(nombre, idEstado) VALUES('Pimiento',2);
-  INSERT INTO vegetales(nombre, idEstado) VALUES('Pimiento',3);
+
   INSERT INTO vegetales(nombre, idEstado) VALUES('Pimiento',4);
 
   CREATE TABLE parametros (
     idParametro INTEGER      AUTO_INCREMENT PRIMARY KEY,
-    horasRiego  DOUBLE       NOT NULL,
+    agua        DOUBLE       NOT NULL,
     horasLuz    DOUBLE       NOT NULL,
     temperatura DOUBLE       NOT NULL,
     tipoTierra  VARCHAR(255) NOT NULL
   );
 
-  INSERT INTO parametros(horasRiego, horasLuz, temperatura, tipoTierra) VALUES(1, 2,20,'rocosa');
-  INSERT INTO parametros(horasRiego, horasLuz, temperatura, tipoTierra) VALUES(2, 3,18,'fertil');
-  INSERT INTO parametros(horasRiego, horasLuz, temperatura, tipoTierra) VALUES(3, 5,21,'acida');
+  INSERT INTO parametros(agua, horasLuz, temperatura, tipoTierra) VALUES(1, 2,20,'rocosa');
+  INSERT INTO parametros(agua, horasLuz, temperatura, tipoTierra) VALUES(2, 3,18,'fertil');
+  INSERT INTO parametros(agua, horasLuz, temperatura, tipoTierra) VALUES(3, 5,21,'acida');
 
   CREATE TABLE cultivoIdeal (
     idCultivoIdeal INTEGER AUTO_INCREMENT PRIMARY KEY,
