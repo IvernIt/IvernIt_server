@@ -23,75 +23,97 @@
 
   INSERT INTO invernaderos(idUsuario) VALUES(1);
   INSERT INTO invernaderos(idUsuario) VALUES(1);
+  INSERT INTO invernaderos(idUsuario) VALUES(2);
+  INSERT INTO invernaderos(idUsuario) VALUES(3);
+  INSERT INTO invernaderos(idUsuario) VALUES(3);
 
-  CREATE TABLE vegetales (
-    idVegetal INTEGER      AUTO_INCREMENT PRIMARY KEY,
+  CREATE TABLE estados (
+    idEstado  INTEGER      AUTO_INCREMENT PRIMARY KEY,
     nombre    VARCHAR(255) NOT NULL
   );
 
-  INSERT INTO vegetales(nombre) VALUES('Tomate');
-  INSERT INTO vegetales(nombre) VALUES('Patata');
-  INSERT INTO vegetales(nombre) VALUES('Cebolla');
-  INSERT INTO vegetales(nombre) VALUES('Pimiento');
+  INSERT INTO estados(nombre) VALUES('Germinación');
+  INSERT INTO estados(nombre) VALUES('Ahijamiento');
+  INSERT INTO estados(nombre) VALUES('Gran crecimiento');
+  INSERT INTO estados(nombre) VALUES('Maduracion');
+
+  CREATE TABLE vegetales (
+    idVegetal INTEGER      AUTO_INCREMENT PRIMARY KEY,
+    nombre    VARCHAR(255) NOT NULL,
+    idEstado  INTEGER      NOT NULL,
+    CONSTRAINT FK_vegIdEst FOREIGN KEY (idEstado)   REFERENCES estados(idEstado)    
+  );
+
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Tomate',1);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Tomate',2);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Tomate',3);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Tomate',4);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Patata',1);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Patata',2);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Patata',3);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Patata',4);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Cebolla',1);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Cebolla',2);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Cebolla',3);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Cebolla',4);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Pimiento',1);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Pimiento',2);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Pimiento',3);
+  INSERT INTO vegetales(nombre, idEstado) VALUES('Pimiento',4);
 
   CREATE TABLE parametros (
     idParametro INTEGER      AUTO_INCREMENT PRIMARY KEY,
-    dimension   VARCHAR(255) NOT NULL,
-    unidad      VARCHAR(255) NOT NULL
+    horasRiego  DOUBLE       NOT NULL,
+    horasLuz    DOUBLE       NOT NULL,
+    temperatura DOUBLE       NOT NULL,
+    tipoTierra  VARCHAR(255) NOT NULL
   );
 
-  INSERT INTO parametros(dimension, unidad) VALUES('riego', 'litros');
-  INSERT INTO parametros(dimension, unidad) VALUES('luz' ,'lumenes');
-  INSERT INTO parametros(dimension, unidad) VALUES('temperatura' ,'grados');
+  INSERT INTO parametros(horasRiego, horasLuz, temperatura, tipoTierra) VALUES(1, 2,20,'rocosa');
+  INSERT INTO parametros(horasRiego, horasLuz, temperatura, tipoTierra) VALUES(2, 3,18,'fertil');
+  INSERT INTO parametros(horasRiego, horasLuz, temperatura, tipoTierra) VALUES(3, 5,21,'acida');
 
   CREATE TABLE cultivoIdeal (
     idCultivoIdeal INTEGER AUTO_INCREMENT PRIMARY KEY,
-    idVegetal      INTEGER NOT NULL,
+    idVegetal      INTEGER UNIQUE NOT NULL,
     idParametro    INTEGER NOT NULL,
-    valor          INTEGER,
     CONSTRAINT FK_culIdeVeg FOREIGN KEY (idVegetal)   REFERENCES vegetales(idVegetal),
     CONSTRAINT FK_culIdePar FOREIGN KEY (idParametro) REFERENCES parametros(idParametro)
   );
   
-  INSERT INTO cultivoIdeal(idVegetal, idParametro, valor) VALUES(1, 1, 5);
-  INSERT INTO cultivoIdeal(idVegetal, idParametro, valor) VALUES(1, 2, 40);
-  INSERT INTO cultivoIdeal(idVegetal, idParametro, valor) VALUES(1, 3, 24);
-  INSERT INTO cultivoIdeal(idVegetal, idParametro, valor) VALUES(2, 1, 5);
-  INSERT INTO cultivoIdeal(idVegetal, idParametro, valor) VALUES(2, 2, 40);
-  INSERT INTO cultivoIdeal(idVegetal, idParametro, valor) VALUES(2, 3, 24);
+  INSERT INTO cultivoIdeal(idVegetal, idParametro) VALUES(1, 1);
+  INSERT INTO cultivoIdeal(idVegetal, idParametro) VALUES(2, 1);
 
   CREATE TABLE cultivoInvernadero (
-    idCultivoInve INTEGER AUTO_INCREMENT PRIMARY KEY,
-    idVegetal     INTEGER NOT NULL,
-    idParametro   INTEGER NOT NULL,
-    idInvernadero INTEGER NOT NULL,
-    valor         INTEGER NOT NULL,
+    idCultivoInve INTEGER,
+    idVegetal     INTEGER,
+    idParametro   INTEGER,
+    idInvernadero INTEGER,
+    fechaInicio   DATE NOT NULL,
+    CONSTRAINT PK_culInv    PRIMARY KEY (idCultivoInve,idVegetal,idParametro,idInvernadero),
     CONSTRAINT FK_culInvVeg FOREIGN KEY (idVegetal)     REFERENCES vegetales(idVegetal),
     CONSTRAINT FK_culInvPar FOREIGN KEY (idParametro)   REFERENCES parametros(idParametro),
     CONSTRAINT FK_culInvInv FOREIGN KEY (idInvernadero) REFERENCES invernaderos(idInvernadero)
   );
 
-  INSERT INTO cultivoInvernadero(idVegetal, idParametro, idInvernadero, valor) VALUES(1, 1, 1, 4);
-  INSERT INTO cultivoInvernadero(idVegetal, idParametro, idInvernadero, valor) VALUES(1, 2, 1, 39);
-  INSERT INTO cultivoInvernadero(idVegetal, idParametro, idInvernadero, valor) VALUES(1, 3, 1, 25);
-  INSERT INTO cultivoInvernadero(idVegetal, idParametro, idInvernadero, valor) VALUES(2, 1, 2, 4);
-  INSERT INTO cultivoInvernadero(idVegetal, idParametro, idInvernadero, valor) VALUES(2, 2, 2, 39);
-  INSERT INTO cultivoInvernadero(idVegetal, idParametro, idInvernadero, valor) VALUES(2, 3, 2, 25); 
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 1, 1, 1,'01-02-2017');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 2, 2, 1,'01-02-2017');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 3, 3, 1,'01-02-2017');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 4, 3, 1,'01-02-2017');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 1, 3, 2,'01-02-2017');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 2, 1, 2,'01-02-2017');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 3, 2, 2,'01-02-2017'); 
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 4, 2, 2,'01-02-2017'); 
 
   CREATE TABLE datosCosecha (
     idDatoCosecha INTEGER AUTO_INCREMENT PRIMARY KEY,
-    idVegetal     INTEGER NOT NULL,
-    idParametro   INTEGER NOT NULL,
-    valor         INTEGER,
-    fecha         VARCHAR(10),
-    resultado     CHAR,
-    CONSTRAINT FK_datCosVeg FOREIGN KEY (idVegetal)   REFERENCES vegetales(idVegetal),
-    CONSTRAINT FK_datCosPar FOREIGN KEY (idParametro) REFERENCES parametros(idParametro)
+    idCultivoInve  INTEGER NOT NULL,
+    resultado     CHAR NOT NULL,
+    CONSTRAINT FK_datCosVeg FOREIGN KEY (idCultivoInve)   REFERENCES cultivoInvernadero(idCultivoInve)
   );
 
-  INSERT INTO datosCosecha(idVegetal, idParametro, valor, fecha, resultado) VALUES(1, 1, 5,'01-01-2017', 'A');
-  INSERT INTO datosCosecha(idVegetal, idParametro, valor, fecha, resultado) VALUES(1, 2, 40,'01-01-2017', 'A');
-  INSERT INTO datosCosecha(idVegetal, idParametro, valor, fecha, resultado) VALUES(1, 3, 24,'01-01-2017', 'A');
+  INSERT INTO datosCosecha(idCultivoInve, resultado) VALUES(1, 'A');
+  INSERT INTO datosCosecha(idCultivoInve, resultado) VALUES(2, 'B');
 
   CREATE USER 'ivernit'@'localhost' IDENTIFIED BY '1vern1t';
   GRANT ALL PRIVILEGES ON IvernIt.* TO 'ivernit'@'localhost';
