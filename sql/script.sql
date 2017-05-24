@@ -114,6 +114,6 @@
   INSERT INTO datosCosecha(idCultivoInve, resultado) VALUES(1, 'A');
   INSERT INTO datosCosecha(idCultivoInve, resultado) VALUES(2, 'B');
 
-  CREATE USER 'ivernit'@'localhost' IDENTIFIED BY '1vern1t';
-  GRANT ALL PRIVILEGES ON IvernIt.* TO 'ivernit'@'localhost';
+  CREATE USER 'ivernit'@'*' IDENTIFIED BY '1vern1t';
+  GRANT ALL PRIVILEGES ON IvernIt.* TO 'ivernit'@'*';
   FLUSH PRIVILEGES;
