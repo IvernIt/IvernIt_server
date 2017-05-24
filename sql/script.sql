@@ -95,14 +95,14 @@
     CONSTRAINT FK_culInvInv FOREIGN KEY (idInvernadero) REFERENCES invernaderos(idInvernadero)
   );
 
-  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 1, 1, 1,'01-02-2017');
-  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 2, 2, 1,'01-02-2017');
-  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 3, 3, 1,'01-02-2017');
-  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 4, 3, 1,'01-02-2017');
-  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 1, 3, 2,'01-02-2017');
-  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 2, 1, 2,'01-02-2017');
-  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 3, 2, 2,'01-02-2017'); 
-  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 4, 2, 2,'01-02-2017'); 
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 1, 1, 1,'2017-01-02');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 2, 2, 1,'2017-01-02');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 3, 3, 1,'2017-01-02');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(1, 4, 3, 1,'2017-01-02');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 1, 3, 2,'2017-01-02');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 2, 1, 2,'2017-01-02');
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 3, 2, 2,'2017-01-02'); 
+  INSERT INTO cultivoInvernadero(idCultivoInve, idVegetal, idParametro, idInvernadero, fechaInicio) VALUES(2, 4, 2, 2,'2017-01-02'); 
 
   CREATE TABLE datosCosecha (
     idDatoCosecha INTEGER AUTO_INCREMENT PRIMARY KEY,
