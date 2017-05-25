@@ -88,7 +88,6 @@ public class Algoritmo {
     resultado.setTemperatura(new Resultados.Resultado.Temperatura());
 
     for (int i = 0; i < tree.size(); i++) {
-
       if (tree.get(i).isGradedA()) {
         TreeElement reference = tree.get(i);
         reference.writeData(resultado);

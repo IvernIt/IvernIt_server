@@ -5,7 +5,6 @@
  */
 package com.ivernit.server.ia;
 
-import static com.ivernit.server.ia.TreeElement.Dato.*;
 import com.ivernit.server.xml.Resultados;
 import java.math.BigInteger;
 import java.util.regex.Matcher;
@@ -18,9 +17,8 @@ import java.util.regex.Pattern;
 public class TreeElement {
 
   private final String rgx = "|   ";
-  private final String simbolo, cifra;
+  private final String simbolo, cifra, dato;
   private final int nivel, fila;
-  private final Dato dato;
   private final boolean gradedA;
   private int numOfA;
 
@@ -28,7 +26,7 @@ public class TreeElement {
     String datos = line.replace(rgx, "");
     nivel = (line.length() - datos.length()) / rgx.length();
     String[] splitted = datos.split(" ");
-    dato = getDato(splitted[0]);
+    dato = splitted[0].toLowerCase();
     simbolo = splitted[1];
     cifra = splitted[2].replace(":", "");
     this.fila = fila;
@@ -42,9 +40,10 @@ public class TreeElement {
   }
 
   public void writeData(Resultados.Resultado resultado) {
+    
     Integer value;
     switch (this.dato) {
-      case AGUA:
+      case "agua":
         value = Integer.parseInt(this.cifra);
         if (this.simbolo.equals("<=")) {
           resultado.getAgua().setMaxInclusive(new BigInteger(value.toString()));
@@ -61,7 +60,7 @@ public class TreeElement {
           resultado.getAgua().setMinInclusive(new BigInteger(value.toString()));
         }
         break;
-      case LUZ:
+      case "luz":
         value = Integer.parseInt(this.cifra);
         if (this.simbolo.equals("<=")) {
           resultado.getLuz().setMaxInclusive(value);
@@ -78,7 +77,7 @@ public class TreeElement {
           resultado.getLuz().setMinInclusive(value);
         }
         break;
-      case TEMPERATURA:
+      case "temperatura":
         value = Integer.parseInt(this.cifra);
         if (this.simbolo.equals("<=")) {
           resultado.getTemperatura().setMaxInclusive(new BigInteger(value.toString()));
@@ -101,11 +100,7 @@ public class TreeElement {
     }
   }
 
-  public enum Dato {
-    AGUA, LUZ, TEMPERATURA, TIERRA
-  }
-
-  public Dato getDato() {
+  public String getDato() {
     return dato;
   }
 
@@ -131,24 +126,5 @@ public class TreeElement {
 
   public int getNumOfA() {
     return numOfA;
-  }
-
-  public static Dato getDato(String str) {
-    Dato ret;
-    switch (str.toUpperCase()) {
-      case "AGUA":
-        ret = AGUA;
-        break;
-      case "LUZ":
-        ret = LUZ;
-        break;
-      case "TEMPERATURA":
-        ret = TEMPERATURA;
-        break;
-      default:
-        ret = TIERRA;
-        break;
-    }
-    return ret;
   }
 }
