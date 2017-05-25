@@ -52,6 +52,7 @@
       <plugin>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
+        <version>0.13.2</version>
         <executions>
           <execution>
             <goals>
@@ -105,46 +106,6 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.jvnet.jaxb2.maven2</groupId>
-        <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>0.12.0</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <schemaIncludes>
-                <include>jaxb/respuesta/*.xsd</include>
-              </schemaIncludes>
-              <episodeFile>${project.build.directory}/generated-sources/xjc/META-INF/jaxb-respuesta.episode</episodeFile>
-              <generatePackage>com.ivernit.server.xml</generatePackage>
-            </configuration>
-            <id>jaxb-generate-respuesta</id>
-          </execution>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
-            <configuration>
-              <schemaIncludes>
-                <include>jaxb/results/*.xsd</include>
-              </schemaIncludes>
-              <episodeFile>${project.build.directory}/generated-sources/xjc/META-INF/jaxb-results.episode</episodeFile>
-              <generatePackage>com.ivernit.server.xml</generatePackage>
-            </configuration>
-            <id>jaxb-generate-results</id>
-          </execution>
-        </executions>
-        <configuration>
-          <catalog>src/main/resources/jaxb/catalog.xml</catalog>
-          <catalogResolver>org.jvnet.jaxb2.maven2.resolver.tools.ClasspathCatalogResolver</catalogResolver>
-          <forceRegenerate>true</forceRegenerate>
-          <generateDirectory>${project.build.directory}/generated-sources/xjc</generateDirectory>
-          <verbose>true</verbose>
-        </configuration>
       </plugin>
     </plugins>
   </build>
