@@ -32,19 +32,17 @@ public class Algoritmo {
   private List<TreeElement> tree;
 
   public void results() throws FileNotFoundException, IOException, Exception {
-    BufferedReader reader = new BufferedReader(
-            new FileReader(PATH));
-
-    Instances instancias = new Instances(reader);
-    instancias.setClassIndex(instancias.numAttributes() - 1);
-
-    J48 classifier = createClassifier();
-
-    classifier.buildClassifier(instancias);
-
-    processResults(classifier.toString());
-    reader.close();
-
+    try (BufferedReader reader = new BufferedReader(
+            new FileReader(PATH))) {
+      Instances instancias = new Instances(reader);
+      instancias.setClassIndex(instancias.numAttributes() - 1);
+      
+      J48 classifier = createClassifier();
+      
+      classifier.buildClassifier(instancias);
+      
+      processResults(classifier.toString());
+    }
   }
 
   private J48 createClassifier() throws Exception {
