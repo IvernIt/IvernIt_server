@@ -24,79 +24,118 @@ public class TreeElement {
 
   public TreeElement(String line, int fila, boolean gradedA) {
     String datos = line.replace(rgx, "");
-    nivel = (line.length() - datos.length()) / rgx.length();
+    this.nivel = (line.length() - datos.length()) / rgx.length();
+
     String[] splitted = datos.split(" ");
-    dato = splitted[0].toLowerCase();
-    simbolo = splitted[1];
-    cifra = splitted[2].replace(":", "");
+    this.dato = splitted[0].toLowerCase();
+    this.simbolo = splitted[1];
+    this.cifra = splitted[2].replace(":", "");
     this.fila = fila;
     this.gradedA = gradedA;
+
     if (this.gradedA) {
       String num = splitted[4];
       Matcher matcher = Pattern.compile("\\d+").matcher(num);
       matcher.find();
-      numOfA = Integer.parseInt(matcher.group());
+      this.numOfA = Integer.parseInt(matcher.group());
     }
   }
 
   public void writeData(Resultados.Resultado resultado) {
-    
-    Integer value;
     switch (this.dato) {
       case "agua":
-        value = Integer.parseInt(this.cifra);
-        if (this.simbolo.equals("<=")) {
-          resultado.getAgua().setMaxInclusive(new BigInteger(value.toString()));
-        }
-        if (this.simbolo.equals(">=")) {
-          resultado.getAgua().setMinInclusive(new BigInteger(value.toString()));
-        }
-        if (this.simbolo.equals("<")) {
-          value--;
-          resultado.getAgua().setMaxInclusive(new BigInteger(value.toString()));
-        }
-        if (this.simbolo.equals(">")) {
-          value++;
-          resultado.getAgua().setMinInclusive(new BigInteger(value.toString()));
-        }
+        insertarAgua(resultado);
         break;
       case "luz":
-        value = Integer.parseInt(this.cifra);
-        if (this.simbolo.equals("<=")) {
-          resultado.getLuz().setMaxInclusive(value);
-        }
-        if (this.simbolo.equals(">=")) {
-          resultado.getLuz().setMinInclusive(value);
-        }
-        if (this.simbolo.equals("<")) {
-          value--;
-          resultado.getLuz().setMaxInclusive(value);
-        }
-        if (this.simbolo.equals(">")) {
-          value++;
-          resultado.getLuz().setMinInclusive(value);
-        }
+        insertarLuz(resultado);
         break;
       case "temperatura":
-        value = Integer.parseInt(this.cifra);
-        if (this.simbolo.equals("<=")) {
-          resultado.getTemperatura().setMaxInclusive(new BigInteger(value.toString()));
-        }
-        if (this.simbolo.equals(">=")) {
-          resultado.getTemperatura().setMinInclusive(new BigInteger(value.toString()));
-        }
-        if (this.simbolo.equals("<")) {
-          value--;
-          resultado.getTemperatura().setMaxInclusive(new BigInteger(value.toString()));
-        }
-        if (this.simbolo.equals(">")) {
-          value++;
-          resultado.getTemperatura().setMinInclusive(new BigInteger(value.toString()));
-        }
+        insertarTemperatura(resultado);
         break;
       default:
         resultado.setTierra(this.cifra);
         break;
+    }
+  }
+
+  private void insertarAgua(Resultados.Resultado resultado) {
+    Integer value = Integer.parseInt(this.cifra);
+    BigInteger max = resultado.getAgua().getMaxInclusive();
+    BigInteger min = resultado.getAgua().getMinInclusive();
+    if (this.simbolo.equals("<")) {
+      value++;
+    }
+    if (this.simbolo.equals(">")) {
+      value--;
+    }
+
+    if (this.simbolo.contains("<")) {
+      if (max != null) {
+        if (max.compareTo(new BigInteger(value.toString())) == 1) {
+          resultado.getAgua().setMaxInclusive(new BigInteger(value.toString()));
+        }
+      }
+    }
+    if (this.simbolo.contains(">")) {
+      if (min != null) {
+        if (min.compareTo(new BigInteger(value.toString())) == -1) {
+          resultado.getAgua().setMinInclusive(new BigInteger(value.toString()));
+        }
+      }
+    }
+  }
+
+  private void insertarLuz(Resultados.Resultado resultado) {
+    Integer value = Integer.parseInt(this.cifra);
+    Integer max = resultado.getLuz().getMaxInclusive();
+    Integer min = resultado.getLuz().getMinInclusive();
+    if (this.simbolo.equals("<")) {
+      value++;
+    }
+    if (this.simbolo.equals(">")) {
+      value--;
+    }
+
+    if (this.simbolo.contains("<")) {
+      if (max != null) {
+        if (max.compareTo(value) == 1) {
+          resultado.getAgua().setMaxInclusive(new BigInteger(value.toString()));
+        }
+      }
+    }
+    if (this.simbolo.contains(">")) {
+      if (min != null) {
+        if (min.compareTo(value) == -1) {
+          resultado.getAgua().setMinInclusive(new BigInteger(value.toString()));
+        }
+      }
+    }
+  }
+
+  private void insertarTemperatura(Resultados.Resultado resultado) {
+    Integer value = Integer.parseInt(this.cifra);
+    BigInteger max = resultado.getTemperatura().getMaxInclusive();
+    BigInteger min = resultado.getTemperatura().getMinInclusive();
+    if (this.simbolo.equals("<")) {
+      value++;
+    }
+    if (this.simbolo.equals(">")) {
+      value--;
+    }
+
+    if (this.simbolo.contains("<")) {
+      if (max != null) {
+        if (max.compareTo(new BigInteger(value.toString())) == 1) {
+          resultado.getTemperatura().setMaxInclusive(new BigInteger(value.toString()));
+        }
+      }
+    }
+    if (this.simbolo.contains(">")) {
+      if (min != null) {
+        if (min.compareTo(new BigInteger(value.toString())) == -1) {
+          resultado.getTemperatura().setMinInclusive(new BigInteger(value.toString()));
+        }
+      }
     }
   }
 
@@ -127,4 +166,5 @@ public class TreeElement {
   public int getNumOfA() {
     return numOfA;
   }
+
 }

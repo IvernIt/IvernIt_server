@@ -7,10 +7,10 @@ package com.ivernit.server.ia;
 
 import com.ivernit.server.xml.Resultados;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.JAXBContext;
@@ -31,18 +31,28 @@ public class Algoritmo {
 
   private List<TreeElement> tree;
 
-  public void results() throws FileNotFoundException, IOException, Exception {
+  public String results() throws FileNotFoundException, IOException, Exception {
+    String xml;
     try (BufferedReader reader = new BufferedReader(
             new FileReader(PATH))) {
-      Instances instancias = new Instances(reader);
-      instancias.setClassIndex(instancias.numAttributes() - 1);
-      
+
+      Instances instancias = createInstancias(reader);
+
       J48 classifier = createClassifier();
-      
+
       classifier.buildClassifier(instancias);
+
+      Resultados resultados = processResults(classifier.toString());
       
-      processResults(classifier.toString());
+      xml = createXml(resultados);
     }
+    return xml;
+  }
+
+  private Instances createInstancias(BufferedReader reader) throws IOException {
+    Instances instancias = new Instances(reader);
+    instancias.setClassIndex(instancias.numAttributes() - 1);
+    return instancias;
   }
 
   private J48 createClassifier() throws Exception {
@@ -67,7 +77,13 @@ public class Algoritmo {
     return classifier;
   }
 
-  private void processResults(String results) throws JAXBException {
+  private Resultados processResults(String results) throws JAXBException {
+    Resultados resultados = new Resultados();
+    Resultados.Resultado resultado = new Resultados.Resultado();
+    resultado.setAgua(new Resultados.Resultado.Agua());
+    resultado.setLuz(new Resultados.Resultado.Luz());
+    resultado.setTemperatura(new Resultados.Resultado.Temperatura());
+
     tree = new ArrayList();
     String[] lines = results.split("\n");
 
@@ -80,12 +96,6 @@ public class Algoritmo {
       }
       tree.add(element);
     }
-
-    Resultados resultados = new Resultados();
-    Resultados.Resultado resultado = new Resultados.Resultado();
-    resultado.setAgua(new Resultados.Resultado.Agua());
-    resultado.setLuz(new Resultados.Resultado.Luz());
-    resultado.setTemperatura(new Resultados.Resultado.Temperatura());
 
     for (int i = 0; i < tree.size(); i++) {
       if (tree.get(i).isGradedA()) {
@@ -103,9 +113,18 @@ public class Algoritmo {
     }
     resultados.getResultado().add(resultado);
 
+    return resultados;
+  }
+
+  private String createXml(Resultados resultados) throws JAXBException {
+    String str;
+    StringWriter sw = new StringWriter();
     JAXBContext ctx = JAXBContext.newInstance(Resultados.class);
     Marshaller marshaller = ctx.createMarshaller();
     marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-    marshaller.marshal(resultados, new File("/home/sampru/Escritorio/prueba.txt"));
+    marshaller.marshal(resultados, sw);
+    str = sw.toString();
+    return str;
   }
+
 }
