@@ -62,10 +62,10 @@ public class TreeElement {
     Integer value = Integer.parseInt(this.cifra);
     BigInteger max = resultado.getAgua().getMaxInclusive();
     BigInteger min = resultado.getAgua().getMinInclusive();
-    if (this.simbolo.equals("<")) {
+    if (this.simbolo.equals(">")) {
       value++;
     }
-    if (this.simbolo.equals(">")) {
+    if (this.simbolo.equals("<")) {
       value--;
     }
 
@@ -74,6 +74,8 @@ public class TreeElement {
         if (max.compareTo(new BigInteger(value.toString())) == 1) {
           resultado.getAgua().setMaxInclusive(new BigInteger(value.toString()));
         }
+      } else {
+        resultado.getAgua().setMaxInclusive(new BigInteger(value.toString()));
       }
     }
     if (this.simbolo.contains(">")) {
@@ -81,6 +83,8 @@ public class TreeElement {
         if (min.compareTo(new BigInteger(value.toString())) == -1) {
           resultado.getAgua().setMinInclusive(new BigInteger(value.toString()));
         }
+      } else {
+        resultado.getAgua().setMinInclusive(new BigInteger(value.toString()));
       }
     }
   }
@@ -89,25 +93,29 @@ public class TreeElement {
     Integer value = Integer.parseInt(this.cifra);
     Integer max = resultado.getLuz().getMaxInclusive();
     Integer min = resultado.getLuz().getMinInclusive();
-    if (this.simbolo.equals("<")) {
+    if (this.simbolo.equals(">")) {
       value++;
     }
-    if (this.simbolo.equals(">")) {
+    if (this.simbolo.equals("<")) {
       value--;
     }
 
     if (this.simbolo.contains("<")) {
       if (max != null) {
         if (max.compareTo(value) == 1) {
-          resultado.getAgua().setMaxInclusive(new BigInteger(value.toString()));
+          resultado.getLuz().setMaxInclusive(value);
         }
+      } else {
+        resultado.getLuz().setMaxInclusive(value);
       }
     }
     if (this.simbolo.contains(">")) {
       if (min != null) {
         if (min.compareTo(value) == -1) {
-          resultado.getAgua().setMinInclusive(new BigInteger(value.toString()));
+          resultado.getLuz().setMinInclusive(value);
         }
+      } else {
+        resultado.getLuz().setMinInclusive(value);
       }
     }
   }
@@ -116,10 +124,10 @@ public class TreeElement {
     Integer value = Integer.parseInt(this.cifra);
     BigInteger max = resultado.getTemperatura().getMaxInclusive();
     BigInteger min = resultado.getTemperatura().getMinInclusive();
-    if (this.simbolo.equals("<")) {
+    if (this.simbolo.equals(">")) {
       value++;
     }
-    if (this.simbolo.equals(">")) {
+    if (this.simbolo.equals("<")) {
       value--;
     }
 
@@ -128,6 +136,8 @@ public class TreeElement {
         if (max.compareTo(new BigInteger(value.toString())) == 1) {
           resultado.getTemperatura().setMaxInclusive(new BigInteger(value.toString()));
         }
+      } else {
+        resultado.getTemperatura().setMaxInclusive(new BigInteger(value.toString()));
       }
     }
     if (this.simbolo.contains(">")) {
@@ -135,6 +145,8 @@ public class TreeElement {
         if (min.compareTo(new BigInteger(value.toString())) == -1) {
           resultado.getTemperatura().setMinInclusive(new BigInteger(value.toString()));
         }
+      } else {
+        resultado.getTemperatura().setMinInclusive(new BigInteger(value.toString()));
       }
     }
   }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ivernit.server.ia.services;
+package com.ivernit.server.services;
 
 import com.ivernit.server.ia.Algoritmo;
 import java.util.logging.Level;
@@ -20,31 +20,35 @@ import javax.ws.rs.core.MediaType;
  *
  * @author sampru
  */
-@Path("resultado")
-public class ResultadoResource {
+@Path("algorithm")
+public class AlgorithmResource {
 
   @Context
   private UriInfo context;
 
   /**
-   * Creates a new instance of ResultadoResource
+   * Creates a new instance of AlgorithmResource
    */
-  public ResultadoResource() {
+  public AlgorithmResource() {
   }
 
   /**
-   * Retrieves representation of an instance of com.ivernit.server.ia.services.ResultadoResource
+   * Retrieves representation of an instance of
+   * com.ivernit.server.services.AlgorithmResource
+   *
    * @return an instance of java.lang.String
    */
   @GET
   @Produces(MediaType.APPLICATION_XML)
   public String getXml() {
-   Algoritmo algoritmo = new Algoritmo();
+    Algoritmo algoritmo = new Algoritmo();
+    String respuesta;
     try {
-      return algoritmo.results();
+      respuesta = algoritmo.results();
     } catch (Exception ex) {
-      Logger.getLogger(ResultadoResource.class.getName()).log(Level.SEVERE, null, ex);
-      return "<resultados>error</resultados>";
+      Logger.getLogger(AlgorithmResource.class.getName()).log(Level.SEVERE, null, ex);
+      respuesta = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<resultados>error</resultados>";
     }
+    return respuesta;
   }
 }

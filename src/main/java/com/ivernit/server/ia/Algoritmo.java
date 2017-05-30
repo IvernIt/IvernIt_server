@@ -8,9 +8,10 @@ package com.ivernit.server.ia;
 import com.ivernit.server.xml.Resultados;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.JAXBContext;
@@ -25,7 +26,7 @@ import weka.core.Instances;
  */
 public class Algoritmo {
 
-  private final String PATH = "files/vegetable_parameters.arff";
+  private final String PATH = "http://sampru.sytes.net/resources/vegetable_parameters.arff";
   private final int HEADER_SIZE = 3;
   private final int BOTTOM_SIZE = 4;
 
@@ -33,19 +34,19 @@ public class Algoritmo {
 
   public String results() throws FileNotFoundException, IOException, Exception {
     String xml;
-    try (BufferedReader reader = new BufferedReader(
-            new FileReader(PATH))) {
-
+    URL url = new URL(PATH);
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
       Instances instancias = createInstancias(reader);
-
+      
       J48 classifier = createClassifier();
-
+      
       classifier.buildClassifier(instancias);
-
+      
       Resultados resultados = processResults(classifier.toString());
       
       xml = createXml(resultados);
     }
+
     return xml;
   }
 
