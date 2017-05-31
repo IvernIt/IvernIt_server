@@ -681,7 +681,3 @@
   INSERT INTO cultivo(cId, vId, pId, iId, cFechaInicio, cResultado) VALUES(198,1,198,198,'2017-01-02','D');
   INSERT INTO cultivo(cId, vId, pId, iId, cFechaInicio, cResultado) VALUES(199,1,199,199,'2017-01-02','C');
   INSERT INTO cultivo(cId, vId, pId, iId, cFechaInicio, cResultado) VALUES(200,1,200,200,'2017-01-02','C');
-
-  CREATE USER 'ivernit'@'*' IDENTIFIED BY '1vern1t';
-  GRANT SELECT, INSERT,  ON IvernIt.* TO 'ivernit'@'*';
-  FLUSH PRIVILEGES;
