@@ -8,11 +8,13 @@ package com.ivernit.server.services;
 import com.ivernit.server.ia.Algoritmo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -36,15 +38,17 @@ public class AlgorithmResource {
    * Retrieves representation of an instance of
    * com.ivernit.server.services.AlgorithmResource
    *
+   * @param idVegetal
    * @return an instance of java.lang.String
    */
   @GET
+  @Consumes("text/plain")
   @Produces(MediaType.APPLICATION_XML)
-  public String getXml() {
+  public String getXml(@QueryParam("id") int idVegetal) {
     Algoritmo algoritmo = new Algoritmo();
     String respuesta;
     try {
-      respuesta = algoritmo.results();
+      respuesta = algoritmo.results(idVegetal);
     } catch (Exception ex) {
       Logger.getLogger(AlgorithmResource.class.getName()).log(Level.SEVERE, null, ex);
       respuesta = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<resultados>error</resultados>";

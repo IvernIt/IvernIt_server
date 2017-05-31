@@ -5,13 +5,15 @@
  */
 package com.ivernit.server.ia;
 
+import com.ivernit.server.dao.Connector;
+import com.ivernit.server.dao.DAOparametro;
+import com.ivernit.server.utils.ParametersArffGenerator;
 import com.ivernit.server.xml.Resultados;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.io.StringWriter;
-import java.net.URL;
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.JAXBContext;
@@ -26,24 +28,27 @@ import weka.core.Instances;
  */
 public class Algoritmo {
 
-  private final String PATH = "http://sampru.sytes.net/resources/vegetable_parameters.arff";
   private final int HEADER_SIZE = 3;
   private final int BOTTOM_SIZE = 4;
 
   private List<TreeElement> tree;
 
-  public String results() throws FileNotFoundException, IOException, Exception {
+  public String results(int vegetalId) throws IOException, Exception {
     String xml;
-    URL url = new URL(PATH);
-    try (BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()))) {
+    
+    Connection con = Connector.getConnection();
+    ArrayList<String> data = DAOparametro.getListaParametrosNotasPorVegetal(vegetalId, con);
+    String str = ParametersArffGenerator.generateString(data);
+    
+    try (BufferedReader reader = new BufferedReader(new StringReader(str))) {
       Instances instancias = createInstancias(reader);
-      
+
       J48 classifier = createClassifier();
-      
+
       classifier.buildClassifier(instancias);
-      
+
       Resultados resultados = processResults(classifier.toString());
-      
+
       xml = createXml(resultados);
     }
 
