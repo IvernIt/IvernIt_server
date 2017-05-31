@@ -33,11 +33,19 @@ public class Algoritmo {
 
   private List<TreeElement> tree;
 
-  public String results(int vegetalId) throws IOException, Exception {
+  /**
+   * Devuelve un XML con los resultados para el vegetal en el estado especificado
+   * @param vegetalId
+   * @param estadoCrecimiento
+   * @return
+   * @throws IOException
+   * @throws Exception
+   */
+  public String results(int vegetalId, int estadoCrecimiento) throws IOException, Exception {
     String xml;
     
     Connection con = Connector.getConnection();
-    ArrayList<String> data = DAOparametro.getListaParametrosNotasPorVegetal(vegetalId, con);
+    ArrayList<String> data = DAOparametro.getListaParametrosNotasPorVegetal(vegetalId, estadoCrecimiento, con);
     String str = ParametersArffGenerator.generateString(data);
     
     try (BufferedReader reader = new BufferedReader(new StringReader(str))) {

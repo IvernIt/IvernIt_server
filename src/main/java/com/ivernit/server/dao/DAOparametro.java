@@ -17,17 +17,19 @@ import java.util.ArrayList;
  */
 public class DAOparametro {
 
-  public static ArrayList<String> getListaParametrosNotasPorVegetal(int idVegetal, Connection con) throws SQLException {
+  public static ArrayList<String> getListaParametrosNotasPorVegetal(int idVegetal, int estadoCrecimiento, Connection con) throws SQLException {
     ArrayList<String> list = new ArrayList();
 
     PreparedStatement ps = con.prepareStatement(
-            "SELECT p.pAgua AS Agua, p.pHorasLuz AS Luz, p.pTemperatura AS Temperatura, p.pTipoTierra AS Tierra, c.cResultado AS Nota\n"
-            + "FROM parametro p JOIN cultivo c ON p.pId = c.cId\n"
-            + "WHERE c.vId = ?");
+            "SELECT p.pAgua AS Agua, p.pHorasLuz AS Luz, p.pTemperatura AS Temperatura, p.pTipoTierra AS Tierra, c.cResultado AS Nota "
+            + "FROM parametro p JOIN cultivo c ON p.pId = c.cId "
+            + "JOIN vegetal v ON c.vId = v.vId "
+            + "WHERE c.vId = ? AND v.ecId = ?");
     ps.setInt(1, idVegetal);
+    ps.setInt(2, idVegetal);
 
     try (ResultSet rs = ps.executeQuery()) {
-      
+
       while (rs.next()) {
         list.add(rs.getString("Agua") + ","
                 + rs.getString("Luz") + ","

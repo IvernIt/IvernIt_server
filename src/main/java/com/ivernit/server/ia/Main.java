@@ -17,7 +17,7 @@ public class Main {
   public static void main(String[] args) {
     try {
       Algoritmo algoritmo = new Algoritmo();
-      System.out.println(algoritmo.results(1));
+      System.out.println(algoritmo.results(1, 1));
     } catch (Exception ex) {
       Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
     }

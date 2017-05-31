@@ -39,16 +39,17 @@ public class AlgorithmResource {
    * com.ivernit.server.services.AlgorithmResource
    *
    * @param idVegetal
+   * @param estadoCrecimiento
    * @return an instance of java.lang.String
    */
   @GET
   @Consumes("text/plain")
   @Produces(MediaType.APPLICATION_XML)
-  public String getXml(@QueryParam("id") int idVegetal) {
+  public String getXml(@QueryParam("id") int idVegetal, @QueryParam("ec") int estadoCrecimiento) {
     Algoritmo algoritmo = new Algoritmo();
     String respuesta;
     try {
-      respuesta = algoritmo.results(idVegetal);
+      respuesta = algoritmo.results(idVegetal, estadoCrecimiento);
     } catch (Exception ex) {
       Logger.getLogger(AlgorithmResource.class.getName()).log(Level.SEVERE, null, ex);
       respuesta = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n<resultados>error</resultados>";
