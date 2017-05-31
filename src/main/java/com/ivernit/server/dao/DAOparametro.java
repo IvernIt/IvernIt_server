@@ -22,7 +22,7 @@ public class DAOparametro {
 
     PreparedStatement ps = con.prepareStatement(
             "SELECT p.pAgua AS Agua, p.pHorasLuz AS Luz, p.pTemperatura AS Temperatura, p.pTipoTierra AS Tierra, c.cResultado AS Nota "
-            + "FROM parametro p JOIN cultivo c ON p.pId = c.cId "
+            + "FROM parametro p JOIN cultivo c ON p.pId = c.pId "
             + "JOIN vegetal v ON c.vId = v.vId "
             + "WHERE c.vId = ? AND v.ecId = ?");
     ps.setInt(1, idVegetal);
