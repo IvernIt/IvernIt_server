@@ -82,11 +82,6 @@
             <goals>
               <goal>generate</goal>
             </goals>
-          </execution>
-          <execution>
-            <goals>
-              <goal>generate</goal>
-            </goals>
             <configuration>
               <schemaIncludes>
                 <include>jaxb/response/*.xsd</include>
