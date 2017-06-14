@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
    */
   private void addRestResourceClasses(Set<Class<?>> resources) {
     resources.add(com.ivernit.server.services.AlgorithmResource.class);
+    resources.add(com.ivernit.server.services.GetCommandResource.class);
   }
   
 }

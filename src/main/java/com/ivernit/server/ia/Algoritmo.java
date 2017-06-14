@@ -34,7 +34,9 @@ public class Algoritmo {
   private List<TreeElement> tree;
 
   /**
-   * Devuelve un XML con los resultados para el vegetal en el estado especificado
+   * Devuelve un XML con los resultados para el vegetal en el estado
+   * especificado
+   *
    * @param vegetalId
    * @param estadoCrecimiento
    * @return
@@ -43,11 +45,11 @@ public class Algoritmo {
    */
   public String results(int vegetalId, int estadoCrecimiento) throws IOException, Exception {
     String xml;
-    
+
     Connection con = Connector.getConnection();
     ArrayList<String> data = DAOparametro.getListaParametrosNotasPorVegetal(vegetalId, estadoCrecimiento, con);
     String str = ParametersArffGenerator.generateString(data);
-    
+
     try (BufferedReader reader = new BufferedReader(new StringReader(str))) {
       Instances instancias = createInstancias(reader);
 
@@ -63,12 +65,24 @@ public class Algoritmo {
     return xml;
   }
 
+  /**
+   * Pasado un reader, crea las instancias
+   *
+   * @param reader reader del fichero de origen
+   * @return instancias
+   * @throws IOException
+   */
   private Instances createInstancias(BufferedReader reader) throws IOException {
     Instances instancias = new Instances(reader);
     instancias.setClassIndex(instancias.numAttributes() - 1);
     return instancias;
   }
 
+  /**
+   * Crea el classifier con los parametros adecuados
+   *
+   * @return @throws Exception
+   */
   private J48 createClassifier() throws Exception {
     J48 classifier = new J48();
     classifier.setBatchSize("100");
@@ -91,6 +105,12 @@ public class Algoritmo {
     return classifier;
   }
 
+  /**
+   * Procesa los resultados y los mete en un objeto del XML
+   * @param results XML con los resultados del analisis
+   * @return
+   * @throws JAXBException
+   */
   private Resultados processResults(String results) throws JAXBException {
     Resultados resultados = new Resultados();
     Resultados.Resultado resultado = new Resultados.Resultado();
@@ -130,6 +150,13 @@ public class Algoritmo {
     return resultados;
   }
 
+  /**
+   * Crea un XML de resultados
+   *
+   * @param resultados resultados en forma de obejo XML
+   * @return
+   * @throws JAXBException
+   */
   private String createXml(Resultados resultados) throws JAXBException {
     String str;
     StringWriter sw = new StringWriter();

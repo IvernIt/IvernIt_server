@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Cada elemento del tree, con su nivel, simbolo y tipo de dato
  *
  * @author sampru
  */
@@ -41,6 +42,10 @@ public class TreeElement {
     }
   }
 
+  /**
+   * Escribe el actual nivel del tree como resultado
+   * @param resultado donde se escribe
+   */
   public void writeData(Resultados.Resultado resultado) {
     switch (this.dato) {
       case "agua":
